@@ -12,12 +12,14 @@ const decompress = async () => {
 
     const unzip = zlib.createUnzip();  
     const rootPath = (nameFile) => path.resolve(__dirname, 'files', nameFile)
-    const inp = fs.createReadStream(rootPath('archive.gz'));  
-    const out = fs.createWriteStream(rootPath('fileToCompress.txt'));  
-    inp.pipe(unzip).pipe(out).on('finish', () => {
+    fs.readFile(rootPath('archive.gz'), 'utf-8', (err) => {
+        if (err) throw new Error('Failed operation!')
+        const inp = fs.createReadStream(rootPath('archive.gz'));  
+        const out = fs.createWriteStream(rootPath('fileToCompress.txt'));  
+        inp.pipe(unzip).pipe(out).on('finish', () => {
         fs.rm(rootPath('archive.gz'), (err) => {})
     })
-    
+    })
     // Write your code here 
 };
 

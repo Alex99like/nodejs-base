@@ -20,7 +20,6 @@ class ToReversStream extends Transform {
 }
 
 const transform = async () => {
-    const transform = new ToReversStream()
     process.stdin.pipe(new ToReversStream().on('data', (data) => {
         process.stdout.write(data + '\n')
     }))
